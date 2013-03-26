@@ -1,24 +1,30 @@
+  backcolor = ask_color("Pick a background")
 Shoes.app :title => "My Amazing Calculator", :width => 260, :height => 300, :resizable => false do
   stack :margin => 40 do
-    @output = edit_line :width => 150
+    background backcolor
+    @output = edit_line :width => 160
     
     
-    flow do
-      %w(7 8 9 / 4 5 6 * 1 2 3 - + 0).each do |op|    #for each of those  
-        button op do         # create a button
-          append op #that enters it's contents
+
+    flow :fill => "#800000" do
+      %w(**2 ** % 7 8 9 / 4 5 6 * 1 2 3 - + 0 = C).each do |op|    #for each of those  
+        button op do   # create a button
+          case op
+            when "="
+              eval_expression #calculate the result
+            when "C"
+              clear_expression #calculate the result
+            #when "**2"
+             # op :text => "^"
+              #append op
+            else
+              append op #that enters it's contents
+          end
         end
       end
-      
-      button "=" do #creating equals button
-        eval_expression #calculate the result
-      end
-      button "C" do #creating equals button
-        clear_expression #calculate the result
-      end
     end
-    
   end
+
   
   # Stick a string on the end of our input
   #
